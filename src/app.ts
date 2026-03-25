@@ -1,6 +1,7 @@
 import express from "express";
 import { connectDB, sequelize } from "./config/db.config";
 import dotenv from "dotenv";
+import { mainRouter } from "./routes/index-route";
 dotenv.config();
 
 const app = express();
@@ -15,6 +16,9 @@ app.get("/", (req, res) => {
     message: "Welcome to MySQL + PostgreSQL + Sequelize Training Program",
   });
 });
+
+// main router
+app.use(mainRouter);
 
 // start server initialize
 async function startServer() {
