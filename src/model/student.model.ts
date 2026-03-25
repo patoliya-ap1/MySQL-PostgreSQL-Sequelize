@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.config";
 
 // student model
-export const Student = sequelize.define(
+export const StudentModel = sequelize.define(
   "Student",
   {
     id: {
