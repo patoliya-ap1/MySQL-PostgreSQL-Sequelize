@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { BookModel } from "../../model/index";
-
+import { BookModel, BorrowedBookModel, UserModel } from "../../model/index";
+import { fn, col, where ,Op} from "sequelize";
 /**
  * Fetches all books from the database.
  *
@@ -98,5 +98,92 @@ export const deleteBook = async (
     success: true,
     message: "book deleted successfully.",
     deletedBook: book,
+  });
+};
+
+/**
+ * Borrow a book by ID.
+ *
+ * @async
+ * @param {Request} req - Express request object, expects book ID in req.params.id.
+ * @param {Response} res - Express response object.
+ * @param {NextFunction} next - Express next middleware function.
+ * @returns {Promise<void>} Sends a JSON response with the borrowed-book.
+ */
+export const borrowBook = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const bookId = req.params.id as string;
+  const { userId } = req.body;
+  const borrowedBook = await BorrowedBookModel.create({ userId, bookId });
+  res.status(200).json({
+    success: true,
+    message: "book borrowed successfully.",
+    borrowedBook,
+  });
+};
+
+/**
+ * books borrowed by a userId
+ *
+ * @async
+ * @param {Request} req - Express request object, expects user ID in req.params.id.
+ * @param {Response} res - Express response object.
+ * @param {NextFunction} next - Express next middleware function.
+ * @returns {Promise<void>} Sends a JSON response user with the borrowed-book.
+ */
+export const borrowedBookByUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const userId = req.params.id as string;
+  const user = await UserModel.findByPk(userId, {
+    include: {
+      model: BookModel,
+      through: { attributes: [] },
+    },
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "borrowed book fetched successfully.",
+    books: (user as any)?.Books,
+  });
+};
+
+/**
+ * books borrowed by a userId
+ *
+ * @async
+ * @param {Request} req - Express request object, expects user ID in req.params.id.
+ * @param {Response} res - Express response object.
+ * @param {NextFunction} next - Express next middleware function.
+ * @returns {Promise<void>} Sends a JSON response user with more than two borrowed-book.
+ */
+export const moreThanTWoBorrowedUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const users = await UserModel.findAll({
+    attributes: ["id", "name", [fn("COUNT", col("Books.id")), "bookCount"]],
+    include: {
+      model: BookModel,
+      attributes: [],
+      through: { attributes: [] },
+    },
+    group: ["User.id"],
+    having:where(fn('COUNT', col('Books.id')), {
+    [Op.gt]: 2
+  })
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "more than two borrowed book users fetched successfully.",
+    users,
   });
 };
