@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { StudentModel } from "../model/student.model";
+import { StudentModel } from "../../model/student.model";
 
 /**
  * Fetches all students from the database.
