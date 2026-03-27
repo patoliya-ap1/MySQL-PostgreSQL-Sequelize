@@ -1,5 +1,12 @@
 import express from "express";
-import { createOrder, getOrder } from "../../controller/order/orderController";
+import {
+  avgOrderValue,
+  createOrder,
+  getOrder,
+  ordersInLastWeek,
+  topCustomer,
+  totalSales,
+} from "../../controller/order/orderController";
 
 export const orderRouter = express.Router();
 
@@ -8,3 +15,15 @@ orderRouter.get("/", getOrder);
 
 // create order
 orderRouter.post("/:id", createOrder);
+
+// total sales
+orderRouter.get("/total-sales", totalSales);
+
+// total sales
+orderRouter.get("/average-order-value", avgOrderValue);
+
+//orders in last 7 days.
+orderRouter.get("/last-week", ordersInLastWeek);
+
+//top customers
+orderRouter.get("/top-customer", topCustomer);
