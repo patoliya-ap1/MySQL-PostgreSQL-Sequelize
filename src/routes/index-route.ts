@@ -4,6 +4,7 @@ import { bookRouter } from "./book/bookRoute";
 import { userRouter } from "./user/userRoute";
 import { ecomUserRouter } from "./ecom-user/ecomUserRoute";
 import { productRouter } from "./product/productRoute";
+import { orderRouter } from "./order/orderRoute";
 
 // main route
 export const mainRouter = express.Router();
@@ -22,3 +23,6 @@ mainRouter.use("/ecom/users", ecomUserRouter);
 
 // products routes
 mainRouter.use("/products", productRouter);
+
+// orders routes
+mainRouter.use("/orders", orderRouter);
