@@ -15,11 +15,21 @@ export const getProduct = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const products = await ProductModel.findAll();
+  const limit = 5;
+  const page = parseInt(req.query.page as string) || 1;
+  const offset = (page - 1) * limit;
+  const { count, rows } = await ProductModel.findAndCountAll({
+    limit: limit,
+    offset: offset,
+    order: [["createdAt", "DESC"]],
+  });
   res.status(200).json({
     success: true,
+    totalItems: count,
+    totalPages: Math.ceil(count / limit),
+    currentPage: page,
     message: "products fetched successfully.",
-    products,
+    products: rows,
   });
 };
 
