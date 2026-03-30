@@ -15,6 +15,12 @@ export const sequelize = new Sequelize(DATABASE_URL, {
     },
   },
   logging: false,
+  pool:{
+    max:5,
+    min:0,
+    acquire:30000,
+    idle:10000
+  }
 });
 
 // connect to db function
