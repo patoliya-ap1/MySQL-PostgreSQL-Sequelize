@@ -5,7 +5,7 @@ import {
   rankUsers,
   topPosts,
   previousPosts,
-} from "../../controller/social/analyticController";
+} from "../../controller/social-analytics/analyticController";
 
 const router = express.Router();
 
