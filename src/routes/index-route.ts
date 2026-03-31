@@ -7,6 +7,10 @@ import { productRouter } from "./product/productRoute";
 import { orderRouter } from "./order/orderRoute";
 import { accountRouter } from "./account/accountRoute";
 import { bankUserRouter } from "./bank-user/bankUserRoute";
+import { socialUserRouter } from "./social-user/socialUserRoute";
+import { socialPostRouter } from "./post/postRoute";
+import { socialLikeRouter } from "./like/likeRoute";
+import { analyticsRouter } from "./social/analyticsRoute";
 
 // main route
 export const mainRouter = express.Router();
@@ -34,3 +38,15 @@ mainRouter.use("/bank/users", bankUserRouter);
 
 // bank account routes
 mainRouter.use("/bank", accountRouter);
+
+// social users routes
+mainRouter.use("/social/users", socialUserRouter);
+
+// social post routes
+mainRouter.use("/social/posts", socialPostRouter);
+
+// social likes routes
+mainRouter.use("/social/likes", socialLikeRouter);
+
+// social analytics routes
+mainRouter.use("/social/analytics", analyticsRouter);

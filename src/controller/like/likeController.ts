@@ -37,8 +37,9 @@ export const createLike = async (
   res: Response,
   next: NextFunction,
 ) => {
+  const postId = req.params.id;
   const likeData = req.body;
-  const newLike = await SocialLikeModel.create(likeData);
+  const newLike = await SocialLikeModel.create({ ...likeData, postId });
   res.status(201).json({
     success: true,
     message: "new like created successfully.",
