@@ -3,7 +3,7 @@ import { sequelize } from "../config/db.config";
 
 // social like model
 export const SocialLikeModel = sequelize.define(
-  "Post",
+  "Like",
   {
     id: {
       type: DataTypes.INTEGER,

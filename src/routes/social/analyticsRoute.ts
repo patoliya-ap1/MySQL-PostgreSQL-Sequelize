@@ -7,12 +7,10 @@ import {
   previousPosts,
 } from "../../controller/social-analytics/analyticController";
 
-const router = express.Router();
+export const analyticsRouter = express.Router();
 
-router.get("/tech-posts", getTechPosts);
-router.get("/search", searchPosts);
-router.get("/rank-users", rankUsers);
-router.get("/top-posts", topPosts);
-router.get("/previous-posts", previousPosts);
-
-export default router;
+analyticsRouter.get("/tech-posts", getTechPosts);
+analyticsRouter.get("/search", searchPosts);
+analyticsRouter.get("/rank-users", rankUsers);
+analyticsRouter.get("/top-posts", topPosts);
+analyticsRouter.get("/previous-posts", previousPosts);

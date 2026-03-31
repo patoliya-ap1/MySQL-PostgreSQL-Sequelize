@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { Op } from "sequelize";
 import { SocialPostModel } from "../../model/index";
 import { sequelize } from "../../config/db.config";
@@ -19,7 +19,7 @@ export const searchPosts = async (req: Request, res: Response) => {
 
   const result = await sequelize.query(
     `
-    SELECT * FROM "Posts"
+    SELECT * FROM "social-posts"
     WHERE to_tsvector('english', content) @@ to_tsquery(:q)
   `,
     {
@@ -38,8 +38,8 @@ export const rankUsers = async (req: Request, res: Response) => {
       u.name,
       COUNT(p.id) as post_count,
       RANK() OVER (ORDER BY COUNT(p.id) DESC) as rank
-    FROM "Users" u
-    LEFT JOIN "Posts" p ON u.id = p."userId"
+    FROM "social-users" u
+    LEFT JOIN "social-posts" p ON u.id = p."userId"
     GROUP BY u.id
   `);
 
@@ -47,14 +47,14 @@ export const rankUsers = async (req: Request, res: Response) => {
 };
 
 //  Top posts
-export const topPosts = async (req:Request, res:Response) => {
+export const topPosts = async (req: Request, res: Response) => {
   const result = await sequelize.query(`
     SELECT 
       p.id,
       p.content,
       COUNT(l.id) as total_likes
-    FROM "Posts" p
-    LEFT JOIN "Likes" l ON p.id = l."postId"
+    FROM "social-posts" p
+    LEFT JOIN "social-likes" l ON p.id = l."postId"
     GROUP BY p.id
     ORDER BY total_likes DESC
     LIMIT 5
@@ -64,7 +64,7 @@ export const topPosts = async (req:Request, res:Response) => {
 };
 
 // Previous posts (LAG)
-export const previousPosts = async (req:Request, res:Response) => {
+export const previousPosts = async (req: Request, res: Response) => {
   const result = await sequelize.query(`
     SELECT 
       id,
@@ -75,7 +75,7 @@ export const previousPosts = async (req:Request, res:Response) => {
         PARTITION BY "userId"
         ORDER BY "createdAt"
       ) as previous_post
-    FROM "Posts"
+    FROM "social-posts"
   `);
 
   res.json(result[0]);
