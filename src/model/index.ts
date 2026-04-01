@@ -62,14 +62,21 @@ SocialLikeModel.belongsTo(SocialUserModel, { foreignKey: "userId" });
 
 // mini ecommerce
 
-MiniEcomUserModel.hasMany(MiniEcomOrderModel, { foreignKey: "userId" });
+MiniEcomUserModel.hasMany(MiniEcomOrderModel, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+});
 MiniEcomOrderModel.belongsTo(MiniEcomUserModel, { foreignKey: "userId" });
 
-MiniEcomOrderModel.hasMany(MiniEcomOrderItemModel, { foreignKey: "orderId" });
+MiniEcomOrderModel.hasMany(MiniEcomOrderItemModel, {
+  foreignKey: "orderId",
+  onDelete: "CASCADE",
+});
 MiniEcomOrderItemModel.belongsTo(MiniEcomOrderModel, { foreignKey: "orderId" });
 
 MiniEcomProductModel.hasMany(MiniEcomOrderItemModel, {
   foreignKey: "productId",
+  onDelete: "CASCADE",
 });
 
 export {
