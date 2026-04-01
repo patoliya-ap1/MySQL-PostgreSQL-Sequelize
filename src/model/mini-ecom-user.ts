@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.config";
 
 export const MiniEcomUserModel = sequelize.define(
-  "User",
+  "MiniEcomUser",
   {
     name: DataTypes.STRING,
     email: { type: DataTypes.STRING, unique: true },
