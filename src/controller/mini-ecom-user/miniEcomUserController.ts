@@ -10,9 +10,7 @@ export const signup = async (req: Request, res: Response) => {
 
   const user = await MiniEcomUserModel.create({ name, email, password: hash });
 
-  res
-    .status(201)
-    .json({ status: true, message: "user signup successfully.", user });
+  res.status(201).json({ status: true, message: "user signup successfully." });
 };
 
 export const login = async (req: Request, res: Response) => {

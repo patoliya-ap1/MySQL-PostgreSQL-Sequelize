@@ -11,6 +11,9 @@ import { socialUserRouter } from "./social-user/socialUserRoute";
 import { socialPostRouter } from "./post/postRoute";
 import { socialLikeRouter } from "./like/likeRoute";
 import { analyticsRouter } from "./social/analyticsRoute";
+import authRouter from "./mini-ecom-auth/authRoute";
+import { ecomProductRouter } from "./mini-ecom-product/productRoute";
+import { ecomOrderRouter } from "./mini-ecom-order/orderRoute";
 
 // main route
 export const mainRouter = express.Router();
@@ -50,3 +53,12 @@ mainRouter.use("/social/likes", socialLikeRouter);
 
 // social analytics routes
 mainRouter.use("/social/analytics", analyticsRouter);
+
+// mini ecommerce auth routes
+mainRouter.use("/auth", authRouter);
+
+// mini ecommerce product routes
+mainRouter.use("/ecom/products", ecomProductRouter);
+
+// mini ecommerce order routes
+mainRouter.use("/ecom/orders", ecomOrderRouter);
