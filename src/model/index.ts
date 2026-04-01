@@ -4,6 +4,10 @@ import { BookModel } from "./books.model";
 import { BorrowedBookModel } from "./borrowed-book.model";
 import { EcomUserModel } from "./ecom-user.model";
 import { SocialLikeModel } from "./like.model";
+import { MiniEcomOrderModel } from "./mini-ecom-order";
+import { MiniEcomOrderItemModel } from "./mini-ecom-orderItem";
+import { MiniEcomProductModel } from "./mini-ecom-product.model";
+import { MiniEcomUserModel } from "./mini-ecom-user";
 import { OrderModel } from "./order.model";
 import { SocialPostModel } from "./post.model";
 import { ProductModel } from "./product.model";
@@ -56,6 +60,18 @@ SocialLikeModel.belongsTo(SocialPostModel, { foreignKey: "postId" });
 SocialUserModel.hasMany(SocialLikeModel, { foreignKey: "userId" });
 SocialLikeModel.belongsTo(SocialUserModel, { foreignKey: "userId" });
 
+// mini ecommerce
+
+MiniEcomUserModel.hasMany(MiniEcomOrderModel, { foreignKey: "userId" });
+MiniEcomOrderModel.belongsTo(MiniEcomUserModel, { foreignKey: "userId" });
+
+MiniEcomOrderModel.hasMany(MiniEcomOrderItemModel, { foreignKey: "orderId" });
+MiniEcomOrderItemModel.belongsTo(MiniEcomOrderModel, { foreignKey: "orderId" });
+
+MiniEcomProductModel.hasMany(MiniEcomOrderItemModel, {
+  foreignKey: "productId",
+});
+
 export {
   UserModel,
   BookModel,
@@ -68,4 +84,8 @@ export {
   SocialLikeModel,
   SocialPostModel,
   SocialUserModel,
+  MiniEcomUserModel,
+  MiniEcomOrderModel,
+  MiniEcomProductModel,
+  MiniEcomOrderItemModel,
 };
